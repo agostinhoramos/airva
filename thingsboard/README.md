@@ -57,6 +57,8 @@ export JAVA_OPTS="$JAVA_OPTS -Xms256M -Xmx256M"
 sudo /usr/share/thingsboard/bin/install/install.sh --loadDemo
 
 sudo service thingsboard start
+sudo service thingsboard stop
+sudo service thingsboard restart
 
 http://localhost:8080/
 
