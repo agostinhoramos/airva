@@ -1,0 +1,8 @@
+
+
+cd airva/RaspberryPiOS-install/app/airva
+cd airva
+django-admin startproject backend
+
+cd backend
+python manage.py startapp core_api

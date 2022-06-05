@@ -14,7 +14,6 @@ django-environ = "^0.8.1"
 django-cors-headers = "^3.11.0"
 python-nmap = "^0.7.1"
 python3-nmap = "^1.5.1"
-asyncio = "^3.4.3"
 json5 = "^0.9.8"
 
 [tool.poetry.dev-dependencies]
