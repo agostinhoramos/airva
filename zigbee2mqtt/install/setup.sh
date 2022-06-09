@@ -3,10 +3,10 @@
 #ls -l /dev/ttyACM0
 #ls -l /dev/serial/by-id
 
-sudo apt-get purge nodejs && sudo apt-get purge --auto-remove nodejs && sudo apt-get autoremove
+# sudo apt-get purge nodejs && sudo apt-get purge --auto-remove nodejs && sudo apt-get autoremove
 
-# sudo apt-get install -y nodejs npm git make g++ gcc
-# git clone https://github.com/Koenkk/zigbee2mqtt.git
+sudo apt-get install -y make g++ gcc
+git clone https://github.com/Koenkk/zigbee2mqtt.git
 
 sudo mv zigbee2mqtt /opt/zigbee2mqtt
 
