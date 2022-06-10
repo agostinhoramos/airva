@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# sudo apt update && sudo apt upgrade -y
-# sudo rm -rf /tmp/*
-# cd /tmp/
-
 sudo apt-get install git
 
 source /var/opt/airva/apache2/install/setup.sh
