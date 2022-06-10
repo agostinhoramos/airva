@@ -38,12 +38,12 @@ def main():
 
         # ESP
         [mock__esp8266node1.init, (["oledcountrgb", "normal", argv])],
-        #[mock__esp8266node2.init, (["tmphmdco2dsm", "normal", argv])],
+        [mock__esp8266node2.init, (["tmphmdco2dsm", "normal", argv])],
 
         # SONOFF
-        #[mock__stmphum24.init, (["sonoff_th_1", "normal", argv])],
-        #[mock__contactsn04.init, (["sonoff_cnct_windows", "normal", argv])],
-        #[mock__contactsn04.init, (["sonoff_cnct_door", "normal", argv])],
+        [mock__stmphum24.init, (["sonoff_th_1", "normal", argv])],
+        [mock__contactsn04.init, (["sonoff_cnct_windows", "normal", argv])],
+        [mock__contactsn04.init, (["sonoff_cnct_door", "normal", argv])],
     ]
 
     threads = []
@@ -57,3 +57,4 @@ def main():
 if __name__ == "__main__":
     print("Server running..")
     main()
+    

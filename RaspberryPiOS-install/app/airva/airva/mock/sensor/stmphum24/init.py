@@ -39,12 +39,18 @@ class Mock():
                 else:
                     temperature_live = (temperature_live + tmp)
 
+                if temperature_live > 32 or temperature_live < 12:
+                    temperature_live = 32/2
+
             if randint(1, 3) == 1:
                 hmd = uniform(0.23, 4.3)
                 if randint(1, 4) == 1:
                     humidity_life = (humidity_life - hmd)
                 else:
                     humidity_life = (humidity_life + hmd)
+
+                if humidity_life > 97 or humidity_life < 32:
+                    humidity_life = 32/2
 
             payload = {
                 "battery" : int(battery_life),
