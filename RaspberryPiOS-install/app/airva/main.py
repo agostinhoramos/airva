@@ -8,21 +8,20 @@ sys.path.append( _env["ROOT_PATH"] )
 from airva.backend import index as backend
 from airva.mock.sensor.stmphum24 import init as mock__stmphum24
 from airva.mock.sensor.contactsn04 import init as mock__contactsn04
-
 from airva.mock.sensor.esp8266node1 import init as mock__esp8266node1
 from airva.mock.sensor.esp8266node2 import init as mock__esp8266node2
 
-argv = {
-    "broker" : {
-        "host" : "127.0.0.1",
-        "user" : "mqttadmin",
-        "pass" : "over224433",
-        "port" : 1883
-    },
-    "config" : {
-        "topic" : "airva/device/@sensor_type@/@device_name@"
-    }
-}
+# argv = {
+#     "broker" : {
+#         "host" : "127.0.0.1",
+#         "user" : "mqttadmin",
+#         "pass" : "over224433",
+#         "port" : 1883
+#     },
+#     "config" : {
+#         "topic" : "airva/device/@sensor_type@/@device_name@"
+#     }
+# }
 
 def main():
     _ = "DEV"
@@ -34,16 +33,16 @@ def main():
 
     ## RUN ALL THREADS ##
     func_threads = [
-        #[backend.init, ([_])],
+        [backend.init, ([_])],
 
-        # ESP
-        [mock__esp8266node1.init, (["oledcountrgb", "normal", argv])],
-        [mock__esp8266node2.init, (["tmphmdco2dsm", "normal", argv])],
+        # # ESP
+        # [mock__esp8266node1.init, (["oledcountrgb", "normal", argv])],
+        # [mock__esp8266node2.init, (["tmphmdco2dsm", "normal", argv])],
 
-        # SONOFF
-        [mock__stmphum24.init, (["sonoff_th_1", "normal", argv])],
-        [mock__contactsn04.init, (["sonoff_cnct_windows", "normal", argv])],
-        [mock__contactsn04.init, (["sonoff_cnct_door", "normal", argv])],
+        # # SONOFF
+        # [mock__stmphum24.init, (["sonoff_th_1", "normal", argv])],
+        # [mock__contactsn04.init, (["sonoff_cnct_windows", "normal", argv])],
+        # [mock__contactsn04.init, (["sonoff_cnct_door", "normal", argv])],
     ]
 
     threads = []
