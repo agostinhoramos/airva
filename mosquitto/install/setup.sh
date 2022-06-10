@@ -34,11 +34,11 @@ sleep 1
 
 sudo touch /etc/mosquitto/conf.d/default.conf
 sudo chown $USER:$USER -R /etc/mosquitto/conf.d/default.conf
-sudo echo -e "listener $mqtt_port localhost" >> /etc/mosquitto/conf.d/default.conf
+sudo echo -e "listener $mqtt_port 0.0.0.0" >> /etc/mosquitto/conf.d/default.conf
 
 if [ $enable_websockets -ge 1 ]; then
     sudo echo -e "\n# WEBSOCKETS" >> /etc/mosquitto/conf.d/default.conf
-    sudo echo -e "listener $mqtt_websockets\nprotocol websockets\n" >> /etc/mosquitto/conf.d/default.conf
+    sudo echo -e "listener $mqtt_websockets 0.0.0.0\nprotocol websockets\n" >> /etc/mosquitto/conf.d/default.conf
 fi
 
 if [ $enable_tls -ge 1 ]; then
@@ -78,7 +78,7 @@ if [ $enable_tls -ge 1 ]; then
     {
         echo ""
         echo "# TLS"
-        echo "listener $mqtt_tls_port"
+        echo "listener $mqtt_tls_port 0.0.0.0"
         echo "cafile /etc/mosquitto/ca_certificates/ca.crt"
         echo "keyfile /etc/mosquitto/ca_certificates/server.key"
         echo "certfile /etc/mosquitto/ca_certificates/server.crt"
