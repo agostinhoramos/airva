@@ -17,9 +17,9 @@ sudo wget https://github.com/thingsboard/thingsboard/releases/download/v3.3.4.1/
 
 sudo dpkg -i thingsboard-3.3.4.1.deb
 
-sudo mv -f /var/opt/airva/thingsboard/install/thingsboard.conf /etc/thingsboard/conf/
+sudo cp -f /var/opt/airva/thingsboard/install/thingsboard.conf /etc/thingsboard/conf/
 
-sudo mv -f /var/opt/airva/thingsboard/thingsboard.yml /usr/share/thingsboard/conf/
+sudo cp -f /var/opt/airva/thingsboard/install/thingsboard.yml /usr/share/thingsboard/conf/
 
 sudo /usr/share/thingsboard/bin/install/install.sh --loadDemo
 
