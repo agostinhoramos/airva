@@ -18,8 +18,8 @@ source /var/opt/airva/zigbee2mqtt/install/setup.sh
 
 source /var/opt/airva/WLAN/setup.sh
 
-sudo chmod +x /var/opt/airva/SystemdService/setup.sh
+# sudo chmod +x /var/opt/airva/SystemdService/setup.sh
 
-sudo /var/opt/airva/SystemdService/setup.sh
+# sudo /var/opt/airva/SystemdService/setup.sh
 
 echo "Done :)"
