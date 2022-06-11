@@ -10,3 +10,5 @@
 `source /var/opt/airva/RaspberryPiOS-install/app/airva/install/setup.sh`
 
 `sudo reboot`
+
+`sudo netstat -ntlp | grep LISTEN`

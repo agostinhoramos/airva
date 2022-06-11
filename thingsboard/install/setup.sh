@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Unistall
+
+sudo service thingsboard stop
+sudo dpkg -l | grep thingsboard
+sudo dpkg -r thingsboard
+sudo dpkg -P thingsboard
+sudo dpkg -l | grep thingsboard
+
+
 PSQL_PSSW="over_332244"
 
 sudo -u postgres psql -U postgres -d postgres -c "alter user postgres with password '$PSQL_PSSW';"
@@ -11,11 +20,15 @@ sudo apt update && sudo apt upgrade -y
 sudo rm -rf /tmp/*
 cd /tmp/
 
-sudo apt install -y openjdk-11-jdk
+# sudo apt install -y openjdk-11-jdk
 
-sudo wget https://github.com/thingsboard/thingsboard/releases/download/v3.3.4.1/thingsboard-3.3.4.1.deb
+sudo apt install -y openjdk-8-jdk
 
-sudo dpkg -i thingsboard-3.3.4.1.deb
+# sudo wget https://github.com/thingsboard/thingsboard/releases/download/v3.3.4.1/thingsboard-3.3.4.1.deb
+# sudo dpkg -i thingsboard-3.3.4.1.deb
+
+sudo wget https://github.com/thingsboard/thingsboard/releases/download/v3.2.1/thingsboard-3.2.1.deb
+sudo dpkg -i thingsboard-3.2.1.deb
 
 sudo cp -f /var/opt/airva/thingsboard/install/thingsboard.conf /etc/thingsboard/conf/
 

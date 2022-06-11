@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install git
+# sudo apt-get install git
 
 source /var/opt/airva/apache2/install/setup.sh
 
