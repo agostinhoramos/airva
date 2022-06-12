@@ -36,7 +36,7 @@ void setup() {
   // connecting to a WiFi network
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
-      writeOLED("Connecting to WiFi...", 1);
+      writeOLED("Connecting to WiFi.", 1);
       delay(500);
       writeOLED("Connecting to WiFi..", 1);
   }
