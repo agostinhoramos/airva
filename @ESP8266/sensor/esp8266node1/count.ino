@@ -6,14 +6,15 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
 //0x31
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
 
 
 // WiFi
-const char *ssid = "CASA RAMOS"; // Enter your WiFi name
-const char *password = "ngueTela";  // Enter WiFi password
+const char *ssid = "DIRECT-AIRVA"; // Enter your WiFi name
+const char *password = "ABCDEFGH4321";  // Enter WiFi password
 
 // MQTT Broker
 const char *mqtt_broker = "airva.local";
@@ -31,13 +32,13 @@ void setup() {
 
   // OLED
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  writeOLED("0");
   
   // connecting to a WiFi network
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
+      writeOLED("Connecting to WiFi...", 1);
       delay(500);
-      Serial.println("Connecting to WiFi..");
+      writeOLED("Connecting to WiFi..", 1);
   }
   Serial.println("Connected to the WiFi network");
   //connecting to a mqtt broker
@@ -50,9 +51,11 @@ void setup() {
       Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
       if (client.connect(client_id.c_str(), mqtt_username, mqtt_password)) {
           Serial.println("Public emqx mqtt broker connected");
+          writeOLED("MQTT Ready.", 2);
       } else {
           Serial.print("failed with state ");
           Serial.print(client.state());
+          writeOLED("Error..", 2);
           delay(2000);
       }
   }
@@ -93,7 +96,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
     long count_detect = parsed["count_detect"];
     Serial.println("Parsed Data:");
     Serial.println(count_detect);
-    writeOLED( String(count_detect) );
+    writeOLED( String(count_detect), 3);
   }
   
   Serial.print("Message:");
@@ -108,10 +111,10 @@ void loop() {
   client.loop();
 }
 
-void writeOLED(String string)
+void writeOLED(String string, int s)
 {
     display.clearDisplay();
-    display.setTextSize(3);
+    display.setTextSize(s);
     display.setCursor(0, 0);
     display.setTextColor(WHITE);
     display.println(string);
