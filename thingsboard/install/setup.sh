@@ -20,8 +20,8 @@ cd /tmp/
 
 sudo apt install -y openjdk-11-jdk
 
-wget https://github.com/thingsboard/thingsboard/releases/download/v3.3.2/thingsboard-3.3.2.deb
-sudo dpkg -i thingsboard-3.3.2.deb
+wget https://github.com/thingsboard/thingsboard/releases/download/v3.3.4.1/thingsboard-3.3.4.1.deb
+sudo dpkg -i thingsboard-3.3.4.1.deb
 
 sudo cp -f /var/opt/airva/thingsboard/install/thingsboard.conf /etc/thingsboard/conf/
 

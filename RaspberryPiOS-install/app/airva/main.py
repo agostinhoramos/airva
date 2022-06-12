@@ -6,22 +6,25 @@ _env = dotenv_values(".env.local")
 sys.path.append( _env["ROOT_PATH"] )
 
 from airva.backend import index as backend
+
+from airva.test import index as middleware_index
+
 from airva.mock.sensor.stmphum24 import init as mock__stmphum24
 from airva.mock.sensor.contactsn04 import init as mock__contactsn04
 from airva.mock.sensor.esp8266node1 import init as mock__esp8266node1
 from airva.mock.sensor.esp8266node2 import init as mock__esp8266node2
 
-# argv = {
-#     "broker" : {
-#         "host" : "127.0.0.1",
-#         "user" : "mqttadmin",
-#         "pass" : "over224433",
-#         "port" : 1883
-#     },
-#     "config" : {
-#         "topic" : "airva/device/@sensor_type@/@device_name@"
-#     }
-# }
+argv = {
+    "broker" : {
+        "host" : "airva.local",
+        "user" : "mqttadmin",
+        "pass" : "over224433",
+        "port" : 1883
+    },
+    "config" : {
+        "topic" : "airva/device"
+    }
+}
 
 def main():
     _ = "DEV"
@@ -33,7 +36,9 @@ def main():
 
     ## RUN ALL THREADS ##
     func_threads = [
-        [backend.init, ([_])],
+        # [backend.init, ([_])],
+
+        [middleware_index.init, ([argv])],
 
         # # ESP
         # [mock__esp8266node1.init, (["oledcountrgb", "normal", argv])],

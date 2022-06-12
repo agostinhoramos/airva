@@ -41,7 +41,7 @@ if [[ $output =~ $WLAN ]]; then
         echo "DHCP=yes"
     } > $wlan_network
 
-    sudo chmod 600 $ws_wlan
+    # sudo chmod 600 $ws_wlan
     sudo systemctl disable wpa_supplicant.service
     sudo systemctl enable wpa_supplicant@wlan1.service
 
