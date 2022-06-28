@@ -6,8 +6,8 @@ WLAN1="wlan1"
 NETWORK="133"
 COUNTRY="PT"
 
-ORIGINAL_SSID="CASA RAMOS"
-ORIGINAL_PASS="ngueTela"
+ORIGINAL_SSID="Cubico Blacks"
+ORIGINAL_PASS="cristao12"
 NEW_SSID="DIRECT-AIRVA"
 NEW_PASS="ABCDEFGH4321"
 
@@ -26,7 +26,7 @@ check_interfaces() {
     echo "Checking interfaces..."
     output=$(/sbin/iw dev)
     if [[ $output =~ $WLAN0 && $output =~ $WLAN1 ]]; then
-        echo "found interfaces... continue..."
+        echo "Found interfaces... continue..."
     else
         echo "Not found interfaces. check them with iwconfig"
         exit 1
@@ -106,9 +106,6 @@ setup_systemd_networkd
 config_wpsup
 setup_wlan1_client
 configure_interfaces
-echo "Done. rebooting..."
-sleep 2
-/sbin/reboot
 
 
 # rm -rf $wp0conf $ws_wlan1 $wlan0_network $wlan1_network
