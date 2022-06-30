@@ -18,7 +18,7 @@ int pinPPD42NS = D8;//DSM501A input D8
 unsigned long duration;
 unsigned long starttime;
 unsigned long endtime;
-unsigned long sampletime_ms = 2000;
+unsigned long sampletime_ms = 1000;
 unsigned long lowpulseoccupancy = 0;
 float ratio = 0;
 
@@ -133,6 +133,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
   Serial.println("-----------------------");
 }
 
+long aux1;
 void loop() {
   //CO2
   leco2();
@@ -173,7 +174,7 @@ void loop() {
   // calculate acetone PPM
   PPM_acetone = 159.6 - 133.33 * (RS / R0);
   // print out the acetone concentration:
-  Serial.println(PPM_acetone);
+  //Serial.println(PPM_acetone);
   // concentração de acetona:
   /*if(stateDetect == HIGH){
     Serial.println("not gas detected = 1");
@@ -190,18 +191,18 @@ void loop() {
       Serial.println(sht30.humidity);
       Serial.println();*/
   }
-  else
+ /* else
   {
     Serial.println("Error!");
-  }
+  }*/
   /***PPD42NS***/
 
   duration = pulseIn(pinPPD42NS, LOW);
   lowpulseoccupancy = lowpulseoccupancy+duration;
   endtime = millis();
-  if ((millis()-starttime) >= sampletime_ms)//if the sampel time = = 30s
+  if ((millis()-starttime) > sampletime_ms)//if the sampel time = = 30s
   {
-    ratio = /* lowpulseoccupancy/(sampletime_ms*10.0); */(lowpulseoccupancy - endtime + starttime + sampletime_ms) / (sampletime_ms * 10.0); // Integer percentage 0=>100
+    ratio =  lowpulseoccupancy/(sampletime_ms*10.0);//(lowpulseoccupancy - endtime + starttime + sampletime_ms) / (sampletime_ms * 10.0); // Integer percentage 0=>100
     concentration = 1.1 * pow(ratio, 3) - 3.8 * pow(ratio, 2) + 520 * ratio + 0.62; // using spec sheet curve
    /* Serial.print("lowpulseoccupancy:");
     Serial.print(lowpulseoccupancy);
@@ -213,6 +214,10 @@ void loop() {
     starttime = millis();
   }
 
+  aux1 = co2ppm;
+  if(aux1 != co2ppm){
+    
+  }
 
   String payloadout = "{";
   /* payloadout += "\"Humidity\":";
