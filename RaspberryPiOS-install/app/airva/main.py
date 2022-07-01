@@ -8,6 +8,7 @@ sys.path.append( _env["ROOT_PATH"] )
 from airva.backend import index as backend
 
 from airva.test import index as middleware_index
+from airva.seeddata import index as seeddata_index
 
 from airva.mock.sensor.stmphum24 import init as mock__stmphum24
 from airva.mock.sensor.contactsn04 import init as mock__contactsn04
@@ -38,7 +39,8 @@ def main():
     func_threads = [
         # [backend.init, ([_])],
 
-        [middleware_index.init, ([argv])],
+        #[middleware_index.init, ([argv])],
+        [seeddata_index.init, ([argv])],
 
         # # ESP
         # [mock__esp8266node1.init, (["oledcountrgb", "normal", argv])],

@@ -18,11 +18,11 @@ source /var/opt/airva/zigbee2mqtt/install/setup.sh
 
 source /var/opt/airva/WLAN/setup.sh
 
-sudo chmod +x /var/opt/airva/SystemdService/setup.sh
+/bin/sudo chmod +x /var/opt/airva/SystemdService/setup.sh
 
-sudo /var/opt/airva/SystemdService/setup.sh
+/bin/sudo /var/opt/airva/SystemdService/setup.sh
 
 echo "Done :)"
 
 sleep 2
-sudo /sbin/reboot
+/bin/sudo /sbin/reboot

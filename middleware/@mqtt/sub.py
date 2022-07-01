@@ -12,7 +12,7 @@ def server_on_connect(client, userdata, flags, rc):
     if rc == 0:
         client.connected_flag = True
     
-    topic_name = "zigbee2mqtt"
+    topic_name = "airva/device"
     print("Connected to your server with topic name '{}' ".format(topic_name))
     client.subscribe(topic_name + '/#')
 

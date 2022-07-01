@@ -26,7 +26,7 @@ sudo systemctl start zigbee2mqtt
 
 sudo systemctl enable zigbee2mqtt.service
 
-systemctl status zigbee2mqtt.service
+sudo systemctl status zigbee2mqtt.service
 
 # sudo systemctl stop zigbee2mqtt
 # sudo systemctl start zigbee2mqtt
