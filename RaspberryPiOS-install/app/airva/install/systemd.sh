@@ -31,4 +31,6 @@ sudo systemctl daemon-reload;
 sudo systemctl enable "$service_name.service";
 sudo systemctl status "$service_name.service";
 
-# sudo systemctl disable "airva.service";
+# sudo systemctl disable airva.service;
+# sudo systemctl enable airva.service;
+# sudo systemctl status airva.service;

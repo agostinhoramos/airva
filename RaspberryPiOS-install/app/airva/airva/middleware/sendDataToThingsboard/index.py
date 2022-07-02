@@ -5,19 +5,21 @@ from random import randrange, uniform, randint, choice
 import threading, time, json, string, requests
 
 
-TB_BASE_URL = "http://airva.local/api/v1"
+TB_BASE_URL = "http://airva.local/api/v1" # Thingsboard
 
-def startMQTT():
-    hostBroker = "127.0.0.1"
-    userBroker = "mqttadmin"
-    passBroker = "over224433"
-    portBroker = 1883
+def startMQTT(broker):
+
+    print("+ Send data to thingsboard")
+
+    hostBroker = broker["host"]
+    userBroker = broker["user"]
+    passBroker = broker["pass"]
+    portBroker = broker["port"]
 
     def server_on_connect(client, userdata, flags, rc):
         if rc == 0:
             client.connected_flag = True
         
-        print("Connected to your server")
         client.subscribe('#')
 
     def server_on_message(client, userdata, msg):
@@ -126,27 +128,6 @@ def startMQTT():
             r = requests.post(url = "{}/GfM5QuAE8UvLUE7fMP2t/telemetry".format(TB_BASE_URL), data = json.dumps(jObj) )
 
 
-        # ****************************** Action Event ******************************
-
-        # Case Example 1: If you open the door, the light turn on else turn off
-        if from_topic == 'zigbee2mqtt/0x00124b002512e998' and len(json_payload) > 0:
-            if not json_payload.get("contact"):
-                server_client.publish('zigbee2mqtt/0x00124b0024c2aafd/set', json.dumps({"state": "ON"}))
-            else:
-                server_client.publish('zigbee2mqtt/0x00124b0024c2aafd/set', json.dumps({"state": "OFF"}))
-
-        # Case Example 2: If the temperature reaches a certain limit of 28.5ºC turn on the air conditioning else turn off.
-        if from_topic == 'zigbee2mqtt/0x00124b0025045eca' and len(json_payload) > 0:
-            temperature = json_payload.get("temperature")
-            if temperature > 28.5:
-                server_client.publish('zigbee2mqtt/0x00124b0024c2aafd/set', json.dumps({"state": "ON"}))
-            else:
-                server_client.publish('zigbee2mqtt/0x00124b0024c2aafd/set', json.dumps({"state": "OFF"}))
-
-        # Case Example 3: If
-        if from_topic == 'zigbee2mqtt/0x00124b0025045eca' and len(json_payload) > 0:
-            pass
-
         
     server_client = mqtt.Client()
     server_client.username_pw_set(userBroker, passBroker)
@@ -158,8 +139,10 @@ def startMQTT():
 
 def init(argv):
 
+    _broker = argv["broker"]
+
     func_threads = [
-        [startMQTT, ([])]
+        [startMQTT, ([_broker])]
     ]
 
     threads = []

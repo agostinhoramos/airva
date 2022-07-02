@@ -7,9 +7,15 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+
+#include <WEMOS_SHT3X.h>
+#include <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel pixels(1, D7, NEO_GRB + NEO_KHZ800);
+
 //0x31
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
+SHT3X sht30(0x45);
 
 
 // WiFi
@@ -28,7 +34,8 @@ PubSubClient client(espClient);
 
 void setup() {
   // Set software serial baud to 115200;
-  Serial.begin(115200);
+  Serial.begin(9600);
+  pixels.begin();
 
   // OLED
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -38,7 +45,6 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
       writeOLED("Connecting to WiFi.", 1);
       delay(500);
-      writeOLED("Connecting to WiFi..", 1);
   }
   Serial.println("Connected to the WiFi network");
   //connecting to a mqtt broker
@@ -64,11 +70,14 @@ void setup() {
   client.subscribe(topic);
 }
 
+int occupants = 0;
+int semaphore = -1;
+
 void callback(char *topic, byte *payload, unsigned int length) {
   Serial.print("Message arrived in topic: ");
   Serial.println(topic);
 
-  if( strcmp(topic, "airva/device/esp8266node1/oledcountrgb") == 0 ){
+  if( strcmp(topic, "airva/device/esp8266_display0x01/set") == 0 ){
     Serial.print("READY........");
 
     StaticJsonBuffer<200> JSONBuffer;
@@ -76,16 +85,13 @@ void callback(char *topic, byte *payload, unsigned int length) {
     Serial.print("Callback From- ");
     Serial.println(topic);
 
-
-    Serial.print("data:");  
-    Serial.print("payload: ");
+    //String strChar = "";
     for(int i =0; i<length; i++){
-      Serial.print((char)payload[i]);
+      //strChar += (char)payload[i];
       JSONinData[i] = (char)payload[i];
     }
     Serial.println();
-    
-    
+
     JsonObject& parsed = JSONBuffer.parseObject(JSONinData);  
     if (!parsed.success()) {   //Check for errors in parsing
       Serial.println("Parsing failed");
@@ -93,22 +99,38 @@ void callback(char *topic, byte *payload, unsigned int length) {
       return;
     }
   
-    long count_detect = parsed["count_detect"];
-    Serial.println("Parsed Data:");
-    Serial.println(count_detect);
-    writeOLED( String(count_detect), 3);
+    occupants = parsed["occupants"];//strChar.toInt();
+    writeOLED( String(occupants), 3);
+
+    semaphore = parsed["semaphore"];
+    if( semaphore >= 0 && semaphore <= 3 ){
+      semaphoreLED(semaphore);
+    }
+    
   }
-  
-  Serial.print("Message:");
-  for (int i = 0; i < length; i++) {
-      Serial.print((char) payload[i]);
-  }
-  Serial.println();
-  Serial.println("-----------------------");
 }
 
 void loop() {
   client.loop();
+}
+
+void semaphoreLED(int opt){
+    if( opt == 0 ){ // DISABLED
+      pixels.setPixelColor(0, pixels.Color(1, 1, 1));
+      pixels.show();
+    }else
+    if( opt == 1 ){ // GREEN
+      pixels.setPixelColor(0, pixels.Color(0, 255, 0));
+      pixels.show();
+    } else
+    if( opt == 2 ){ // YELLOW
+      pixels.setPixelColor(0, pixels.Color(255, 255, 0));
+      pixels.show();
+    }else
+    if( opt == 3 ){ // RED
+      pixels.setPixelColor(0, pixels.Color(255, 0, 0));
+      pixels.show();
+    }
 }
 
 void writeOLED(String string, int s)

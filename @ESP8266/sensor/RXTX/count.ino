@@ -10,17 +10,13 @@ const char *password = "ABCDEFGH4321";  // Enter WiFi password
 // MQTT Broker
 const char *mqtt_broker = "airva.local";
 const char *topic = "airva/device/#";
-const char *pub_topic = "airva/device/esp8266node1/count";
+const char *pub_topic = "airva/device/esp8266_occupantscounter0x01/occupants";
 const char *mqtt_username = "mqttadmin";
 const char *mqtt_password = "over224433";
 const int mqtt_port = 1883;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-
-unsigned long lastMsg = 0;
-#define MSG_BUFFER_SIZE  (50)
-char msg[MSG_BUFFER_SIZE];
 
 void setup() {
   Serial.begin(9600); // Esp
@@ -30,7 +26,6 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
     Serial.println("Connecting to WiFi.");
     delay(500);
-    Serial.println("Connecting to WiFi..");
   }
   
   Serial.println("Connected to the WiFi network");
@@ -51,7 +46,7 @@ void setup() {
       delay(2000);
     }
   }
-  // publish and subscribe
+  
   client.subscribe(topic);
 }
 
@@ -81,28 +76,26 @@ void callback(char *topic, byte *payload, unsigned int length) {
   }
 }
 
-int inByte;
-int pessoas = 0;
+int occupants = 0;
+int max_occupants = 100;
+int min_occupants = 0;
+int inByte = 0;
 
 void loop() {
   client.loop();
   
   while(Serial.available()) {
+    
     inByte = Serial.read();
-    Serial.print("Recebido:");
-    Serial.println(inByte);
-  
-    if( inByte == 'i' && pessoas < 100 )
-      pessoas++;
-    else if( inByte == 'o' && pessoas > 0 )
-      pessoas--;
-      
-    Serial.print("Num Pessoas:");
-    Serial.println(pessoas);
-
-    String payload = String(pessoas);
-    char attributes[3000];
-    payload.toCharArray(attributes, 3000);
+    if( inByte == 'i' && occupants < max_occupants )
+      occupants++;
+    else if( inByte == 'o' && occupants > min_occupants )
+      occupants--;
+    
+    Serial.println(occupants);
+    String payload = String(occupants);
+    char attributes[3];
+    payload.toCharArray(attributes, 3);
     
     client.publish(pub_topic, attributes);
   }

@@ -7,13 +7,9 @@ sys.path.append( _env["ROOT_PATH"] )
 
 from airva.backend import index as backend
 
-from airva.test import index as middleware_index
-from airva.seeddata import index as seeddata_index
-
-from airva.mock.sensor.stmphum24 import init as mock__stmphum24
-from airva.mock.sensor.contactsn04 import init as mock__contactsn04
-from airva.mock.sensor.esp8266node1 import init as mock__esp8266node1
-from airva.mock.sensor.esp8266node2 import init as mock__esp8266node2
+from airva.middleware.systemController import index as systemController
+from airva.middleware.sendDataToThingsboard import index as sendDataToThingsboard
+from airva.middleware.watchDeviceEvents import index as watchDeviceEvents
 
 argv = {
     "broker" : {
@@ -28,6 +24,7 @@ argv = {
 }
 
 def main():
+
     _ = "DEV"
     if _env["PROD_MOD"] == '1':
         _ = "PRD"
@@ -37,19 +34,17 @@ def main():
 
     ## RUN ALL THREADS ##
     func_threads = [
+        # Start webpage
         # [backend.init, ([_])],
 
-        #[middleware_index.init, ([argv])],
-        [seeddata_index.init, ([argv])],
+        # System controller
+        [systemController.init, ([argv])],
 
-        # # ESP
-        # [mock__esp8266node1.init, (["oledcountrgb", "normal", argv])],
-        # [mock__esp8266node2.init, (["tmphmdco2dsm", "normal", argv])],
+        # Send data to thingsboard
+        [sendDataToThingsboard.init, ([argv])],
 
-        # # SONOFF
-        # [mock__stmphum24.init, (["sonoff_th_1", "normal", argv])],
-        # [mock__contactsn04.init, (["sonoff_cnct_windows", "normal", argv])],
-        # [mock__contactsn04.init, (["sonoff_cnct_door", "normal", argv])],
+        # Watch for new events
+        [watchDeviceEvents.init, ([argv])],
     ]
 
     threads = []
@@ -61,6 +56,5 @@ def main():
         thread.join()
 
 if __name__ == "__main__":
-    print("Server running..")
+    print("\n*** Welcome to AirVa Service ***")
     main()
-    
