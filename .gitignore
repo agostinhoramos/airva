@@ -1,3 +1,4 @@
 **/__pycache__/
 **/*.py[cod]
 thingsboard/tmp
+**/node_modules

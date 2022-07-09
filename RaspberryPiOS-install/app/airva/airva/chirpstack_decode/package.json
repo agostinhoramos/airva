@@ -1,0 +1,52 @@
+{
+  "name": "node_api_tool",
+  "version": "1.2.0",
+  "description": "API para disponibilização de dados regionais da COVID-19",
+  "main": "app.js",
+  "scripts": {
+    "server": "nodemon app.js",
+    "test": "node Test/crud.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agostinhoramos/node_api_tool.git"
+  },
+  "keywords": [
+    "Covid-19",
+    "API",
+    "Data",
+    "JWT",
+    "Authentication",
+    "SARS-COV-2"
+  ],
+  "author": "Agostinho Ramos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agostinhoramos/node_api_tool/issues"
+  },
+  "homepage": "https://github.com/agostinhoramos/node_api_tool#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "csv": "^6.0.5",
+    "csv-parse": "^5.0.4",
+    "dotenv": "^14.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mongodb": "^3.7.3",
+    "mongoose": "^6.1.7",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "swagger-ui-express": "^4.3.0"
+  }
+}
