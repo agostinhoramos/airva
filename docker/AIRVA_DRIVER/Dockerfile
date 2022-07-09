@@ -8,6 +8,14 @@ RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
 
 RUN  echo 'user:1234' | chpasswd
 
+RUN mkdir -m 777 -p /var/opt/chirpstack
+
+WORKDIR /var/opt/chirpstack
+
+COPY chirpstack ./
+
+#RUN ./install.sh
+
 RUN service ssh start
 
 EXPOSE 22
