@@ -25,7 +25,7 @@ O objetivo deste trabalho consiste em detalhar o desenvolvimento de um sistema I
 
 ## 🚀 Diagrama de Estados do AirVA
  <p align="center">
-  <img alt="AirVA" src="https://user-images.githubusercontent.com/48354097/178102673-2c003aba-74ef-465a-ad96-9f1d06157f8f.png" width="70%">
+  <img alt="AirVA" src="DOC/img/DiagramaAirVA.png" width="70%">
   
 ## 🧑‍💻 Autores
 
